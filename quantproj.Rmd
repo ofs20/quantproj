@@ -1,0 +1,52 @@
+---
+title: "quantproj"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+
+```
+
+## R Markdown
+
+```{r regr1}
+
+setwd("C:\\Users\\Roger\\Desktop\\R\\Data")
+getwd()
+veggiecc_data = read.csv("Survey_Results.csv")
+
+IsVegetarian = veggiecc_data$vegetarian_2
+StudiesClimateChange = veggiecc_data$climate_change_course2
+less_meat = veggiecc_data$less_meat
+gender = veggiecc_data$Gender
+
+veggiecc_data <- veggiecc_data %>%
+      mutate(less_meat = ifelse(less_meat == "No",0,1))
+
+model_1 = glm(IsVegetarian ~ StudiesClimateChange , data = veggiecc_data, family = binomial(logit))
+summary(model_1)
+
+
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r regr2}
+
+model_2 = glm(less_meat ~ StudiesClimateChange + family_veg , data = veggiecc_data, family = binomial(logit))
+summary(model_2)
+
+
+```
+```{r regr3}
+
+model_3 = lm(less_meat ~ StudiesClimateChange + family_veg + factor(gender) , data = veggiecc_data)
+summary(model_3)
+
+```
