@@ -26,6 +26,12 @@ gender = veggiecc_data$Gender
 
 veggiecc_data <- veggiecc_data %>%
       mutate(less_meat = ifelse(less_meat == "No",0,1))
+      
+** veggiecc_data <- veggiecc_data %>%
+      mutate(gender = ifelse(gender == "Female",0,1))
+
+** veggiecc_data <- veggiecc_data %>%
+      mutate(IsVegetarian = ifelse(IsVegetarian == "No",0,1))
 
 model_1 = glm(IsVegetarian ~ StudiesClimateChange , data = veggiecc_data, family = binomial(logit))
 summary(model_1)
